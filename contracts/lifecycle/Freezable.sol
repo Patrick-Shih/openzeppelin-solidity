@@ -29,10 +29,26 @@ contract Freezable is FreezerRole {
   }
 
   /**
+   * @dev Modifier to make a function callable only when the account is not freezed.
+   */
+  modifier whenTargetNotFreezed(address target) {
+    require(!_freezed[target]);
+    _;
+  }
+
+  /**
    * @dev Modifier to make a function callable only when the account is freezed.
    */
   modifier whenFreezed() {
     require(_freezed[msg.sender]);
+    _;
+  }
+
+  /**
+   * @dev Modifier to make a function callable only when the account is freezed.
+   */
+  modifier whenTargetFreezed(address target) {
+    require(_freezed[target]);
     _;
   }
 

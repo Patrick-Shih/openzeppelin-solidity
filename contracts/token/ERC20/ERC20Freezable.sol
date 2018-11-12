@@ -12,7 +12,7 @@ contract ERC20Freezable is ERC20, Freezable {
   function transfer(
     address to,
     uint256 value
-  ) public whenNotFreezed returns (bool) {
+  ) public whenNotFreezed whenTargetNotFreezed(to) returns (bool) {
     return super.transfer(to, value);
   }
 
@@ -20,7 +20,7 @@ contract ERC20Freezable is ERC20, Freezable {
     address from,
     address to,
     uint256 value
-  ) public whenNotFreezed returns (bool) {
+  ) public whenTargetNotFreezed(from) whenTargetNotFreezed(to) returns (bool) {
     return super.transferFrom(from, to, value);
   }
 
